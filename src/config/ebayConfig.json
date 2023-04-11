@@ -1,0 +1,9 @@
+{
+  "SANDBOX": {
+    "clientId": "iwhysolu-iwhychan-SBX-3500a4123-3cb41332",
+    "clientSecret": "SBX-500a4123c597-9bd6-424a-9f46-d99f",
+    "devid": "c5b5a7da-987e-4bda-96fd-b6ded7db94bd",
+    "redirectUri": "iwhy_solutions_-iwhysolu-iwhych-mveemlw",
+    "baseUrl": "api.sandbox.ebay.com"
+  }
+}

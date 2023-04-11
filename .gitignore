@@ -1,0 +1,12 @@
+/node_modules
+/client/build
+.env
+.idea
+client/debug.log
+lastexecutedqueriesLogs.log
+errorLogs.log
+uploads/*
+/config/*
+app.constants.js
+/config/config.json
+appconstants.js

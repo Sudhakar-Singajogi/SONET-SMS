@@ -1,0 +1,84 @@
+{
+  "name": "SIL",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "nodemon src/app.js",
+    "dev": "nodemon  /src/app.js",
+    "start:dev": "nodemon /src/app.js"
+  },
+  "keywords": [],
+  "author": "Sonet InfoLabs",
+  "license": "ISC",
+  "dependencies": {
+    "@sendgrid/mail": "^7.2.2",
+    "axios": "^0.21.1",
+    "babel-plugin-transform-es2015-spread": "^6.22.0",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "cryptr": "^6.0.2",
+    "custom-env": "^2.0.1",
+    "dotenv": "^8.6.0",
+    "eslint": "^7.3.1",
+    "express": "^4.17.1",
+    "express-rate-limit": "^5.1.3",
+    "express-validator": "^5.3.1",
+    "helmet": "^3.23.3",
+    "joi": "^14.3.1",
+    "js-base64": "^3.2.4",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.21",
+    "mailparser": "^3.3.1",
+    "md5": "2.3.0",
+    "mysql2": "^2.3.3",
+    "node-datetime": "^2.1.2",
+    "nodemailer": "^6.6.3",
+    "qs": "^6.9.4",
+    "request-promise": "^4.2.6",
+    "sequelize": "^6.21.1",
+    "swagger-generator-express": "^2.1.1",
+    "swagger-jsdoc": "^4.0.0",
+    "swagger-ui-express": "^4.1.4",
+    "tedious": "^12.2.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "cross-env": "^7.0.2",
+    "cryptr": "^6.0.2",
+    "eslint": "^7.3.1",
+    "eslint-plugin-prettier": "^4.0.0",
+    "jest": "^27.5.1",
+    "joi": "^14.3.1",
+    "mysql": "github:mysqljs/mysql",
+    "mysql-migrations": "^1.0.6",
+    "nodemon": "^2.0.4",
+    "prettier": "^2.5.1",
+    "randomstring": "^1.1.5",
+    "redux-logger": "^3.0.6",
+    "reverse-md5": "0.0.4",
+    "sequelize-cli": "^6.4.1",
+    "supertest": "^6.2.2",
+    "swagger-ui-express": "^4.1.4",
+    "uuid": "^8.3.0",
+    "winston": "^3.3.3"
+  },
+  "eslintConfig": {
+    "parserOptions": {
+      "ecmaVersion": 6
+    },
+    "extends": [
+      "eslint:recommended",
+      "plugin:pritter/recommended"
+    ],
+    "env": {
+      "node": true,
+      "es6": true,
+      "jest": true
+    }
+  },
+  "engines": {
+    "node": "14.x"
+  }
+}

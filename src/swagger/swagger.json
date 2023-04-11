@@ -1,0 +1,1433 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Its a REST API Documentation for school app backend",
+    "version": "1.0.0",
+    "title": "SONET School App Documentation"
+  },
+  "host": "",
+  "basePath": "/",
+  "tags": [],
+  "schemes": ["http", "https"],
+  "components": {
+    "schemas": {
+      "userLogin": {
+        "type": "object",
+        "properties": {
+          "loginId": {
+            "type": "string",
+            "format": "email",
+            "required": "true"
+          },
+          "password": {
+            "type": "string",
+            "required": "true"
+          }
+        }
+      },
+      "schoolOnboarding": {
+        "type": "object",
+        "properties": {
+          "identity": {
+            "type": "string",
+            "required": true
+          },
+          "schoolName": {
+            "type": "string",
+            "required": true
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "required": true
+          },
+          "password": {
+            "type": "string",
+            "required": true
+          },
+          "contactNumber": {
+            "type": "string",
+            "required": true
+          },
+          "primaryContactPerson": {
+            "type": "string",
+            "required": true
+          }
+        }
+      },
+      "respObj": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "type": "string",
+            "default": "OK"
+          },
+          "resultCode": {
+            "type": "integer",
+            "default": 200
+          },
+          "message": {
+            "type": "string",
+            "default": "Query Success"
+          },
+          "ValidationErrors": {
+            "type": "any",
+            "default": ""
+          },
+          "resultTotal": {
+            "type": "integer",
+            "default": 0
+          },
+          "totalRows": {
+            "type": "integer",
+            "default": 0
+          }
+        }
+      },
+      "getAClass": {
+        "type": "object",
+        "properties": {
+          "classId": {
+            "type": "integer",
+            "default": 1
+          },
+          "className": {
+            "type": "string",
+            "default": "Class-I"
+          },
+          "schoolId": {
+            "type": "integer",
+            "default": 1
+          }
+        }
+      },
+      "getAClassesWithoutSchool": {
+        "type": "object",
+        "properties": {
+          "classId": {
+            "type": "integer",
+            "default": 1
+          },
+          "className": {
+            "type": "string",
+            "default": "Class-I"
+          },
+          "school": {
+            "type": "object",
+            "properties": {
+              "schoolName": {
+                "type": "string",
+                "default": "Talent High School"
+              }
+            }
+          },
+          "sections": {
+            "$ref": "#/components/schemas/manageSections/getAllSectionsOfAClass/properties/data"
+          }
+        }
+      },
+      "listOfClasses": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/getAClass"
+            }
+          }
+        }
+      },
+      "listOfClassesWithOutSchool": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/getAClassesWithoutSchool"
+            }
+          }
+        }
+      },
+      "createAClass": {
+        "type": "object",
+        "properties": {
+          "className": {
+            "type": "string",
+            "required": "true"
+          }
+        }
+      },
+      "editAClass": {
+        "type": "object",
+        "properties": {
+          "className": {
+            "type": "string",
+            "required": false
+          },
+          "status": {
+            "type": "boolean",
+            "returied": false
+          }
+        }
+      },
+      "manageSections": {
+        "addASection": {
+          "type": "object",
+          "properties": {
+            "sectionName": {
+              "type": "string",
+              "default": "Class-I"
+            }
+          }
+        },
+        "editASection": {
+          "type": "object",
+          "properties": {
+            "sectionId": {
+              "type": "integer"
+            },
+            "sectionName": {
+              "type": "string",
+              "default": "Class-I"
+            }
+          }
+        },
+        "getASection": {
+          "type": "object",
+          "properties": {
+            "sectionId": {
+              "type": "integer",
+              "default": 1
+            },
+            "sectionName": {
+              "type": "string",
+              "default": "Class-I"
+            },
+            "status": {
+              "type": "boolean",
+              "default": "1",
+              "required": false
+            }
+          }
+        },
+        "getAllSectionsOfAClass": {
+          "type": "object",
+          "properties": {
+            "data": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/manageSections/getASection"
+              }
+            }
+          }
+        },
+        "createSections": {
+          "type": "object",
+          "properties": {
+            "classId": {
+              "type": "integer",
+              "required": "true",
+              "default": 1
+            },
+            "sections": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/manageSections/addASection"
+              }
+            }
+          }
+        },
+        "editSections": {
+          "type": "object",
+          "properties": {
+            "classId": {
+              "type": "integer",
+              "required": "true",
+              "default": 1
+            },
+            "sections": {
+              "type": "array",
+              "required": false,
+              "items": {
+                "$ref": "#/components/schemas/manageSections/editASection"
+              }
+            }
+          }
+        }
+      },
+      "manageStudents": {
+        "getAStudent": {
+          "type": "object",
+          "properties": {
+            "studentId": {
+              "type": "integer"
+            },
+            "studentFirstName": {
+              "type": "string"
+            },
+            "studentLastName": {
+              "type": "string"
+            },
+            "classId": {
+              "type": "integer"
+            },
+            "sectionId": {
+              "type": "integer"
+            },
+            "academicYear": {
+              "type": "string"
+            },
+            "contactNumber": {
+              "type": "string"
+            },
+            "rollNumber": {
+              "type": "integer"
+            },
+            "status": {
+              "type": "boolean"
+            },
+            "class": {
+              "type": "object",
+              "$ref": "#/components/schemas/getAClass"
+            },
+            "section": {
+              "type": "object",
+              "properties": {
+                "sectionName": {
+                  "type": "string",
+                  "default": 1
+                }
+              }
+            }
+          }
+        },
+        "getACreatedStudent": {
+          "type": "object",
+          "properties": {
+            "studentId": {
+              "type": "integer"
+            },
+            "studentFirstName": {
+              "type": "string"
+            },
+            "studentLastName": {
+              "type": "string"
+            },
+            "academicYear": {
+              "type": "string"
+            },
+            "contactNumber": {
+              "type": "string"
+            },
+            "profilePic": {
+              "type": "string"
+            },
+            "DOB": {
+              "type": "string",
+              "format": "2016-09-09"
+            },
+            "class": {
+              "type": "object",
+              "$ref": "#/components/schemas/getAClass"
+            },
+            "section": {
+              "type": "object",
+              "properties": {
+                "sectionName": {
+                  "type": "string",
+                  "default": 1
+                }
+              }
+            }
+          }
+        },
+        "createAStudent": {
+          "type": "object",
+          "properties": {
+            "studentFirstName": {
+              "type": "string",
+              "required": true
+            },
+            "studentLastName": {
+              "type": "string",
+              "required": true
+            },
+            "dob": {
+              "type": "string",
+              "format": "2016-09-09",
+              "required": true
+            },
+            "contactNumber": {
+              "type": "string",
+              "required": true
+            },
+            "academicYear": {
+              "type": "string",
+              "required": false
+            }
+          }
+        },
+        "updateAStudent": {
+          "type": "object",
+          "properties": {
+            "studentId": {
+              "type": "integer",
+              "required": true
+            },
+            "studentFirstName": {
+              "type": "string",
+              "required": "optional"
+            },
+            "studentLastName": {
+              "type": "string",
+              "required": "optional"
+            },
+            "academicYear": {
+              "type": "string",
+              "format": "2016-09-09",
+              "required": "optional"
+            },
+            "dob": {
+              "type": "string",
+              "format": "2016-09-09",
+              "required": "optional"
+            },
+            "contactNumber": {
+              "type": "string",
+              "required": "optional"
+            },
+            "bloodGroup": {
+              "type": "string",
+              "required": "optional"
+            },
+            "status": {
+              "type": "integer",
+              "required": "optional"
+            },
+            "rollNumber": {
+              "type": "string",
+              "required": "optional"
+            }
+          }
+        },
+        "getStudentsOfClass": {
+          "type": "object",
+          "properties": {
+            "data": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/manageStudents/getAStudent"
+              }
+            }
+          }
+        },
+        "createAStudents": {
+          "type": "object",
+          "properties": {
+            "classId": {
+              "type": "integer",
+              "required": true
+            },
+            "sectionId": {
+              "type": "integer",
+              "required": true
+            },
+            "students": {
+              "type": "array",
+              "requried": true,
+              "items": {
+                "$ref": "#/components/schemas/manageStudents/getACreatedStudent"
+              }
+            }
+          }
+        },
+        "UpdateStudents": {
+          "type": "object",
+          "properties": {
+            "classId": {
+              "type": "integer",
+              "required": true
+            },
+            "sectionId": {
+              "type": "integer",
+              "required": true
+            },
+            "students": {
+              "type": "array",
+              "requried": true,
+              "items": {
+                "$ref": "#/components/schemas/manageStudents/updateAStudent"
+              }
+            }
+          }
+        }
+      },
+      "manageSubjects": {
+        "assgnedClass": {
+          "type": "object",
+          "properties": {
+            "className": {
+              "type": "string",
+              "requried": true
+            },
+            "classId": {
+              "type": "integer",
+              "required": true
+            }
+          }
+        },
+        "createSubject": {
+          "type": "object",
+          "properties": {
+            "subjectName": {
+              "type": "string",
+              "required": true
+            }
+          }
+        },
+        "createAssign": {
+          "type": "object",
+          "properties": {
+            "schoolId": {
+              "type": "integer",
+              "requried": true
+            },
+            "subjects": {
+              "type": "array",
+              "requried": true,
+              "items": {
+                "$ref": "#/components/schemas/manageSubjects/createSubject"
+              }
+            },
+            "assignedClasses": {
+              "type": "array",
+              "requried": "false",
+              "items": {
+                "$ref": "#/components/schemas/manageSubjects/assgnedClass"
+              }
+            }
+          }
+        },
+        "createAssignedSubjectsProps": {
+          "type": "object",
+          "properties": {
+            "assignedId": {
+              "type": "integer"
+            },
+            "class": {
+              "type": "object",
+              "$ref": "#/components/schemas/manageSubjects/assgnedClass"
+            },
+            "school": {
+              "type": "object",
+              "properties": {
+                "schoolName": {
+                  "type": "string"
+                },
+                "identity": {
+                  "type": "string"
+                }
+              }
+            },
+            "subject": {
+              "type": "object",
+              "properties": {
+                "subjectId": {
+                  "type": "integer"
+                },
+                "subjectName": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "getCreateAssignedSubjects": {
+          "type": "object",
+          "properties": {
+            "data": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/manageSubjects/createAssignedSubjectsProps"
+              }
+            }
+          }
+        },
+        "assignSubjectsProps": {
+          "type": "object",
+          "properties": {
+            "subjectName": {
+              "type": "string",
+              "required": true
+            },
+            "subjectId": {
+              "type": "integer",
+              "required": true
+            },
+            "classId": {
+              "type": "integer",
+              "required": true
+            },
+            "className": {
+              "type": "string",
+              "required": true
+            }
+          }
+        },
+        "assignSubjects": {
+          "type": "object",
+          "properties": {
+            "assignSubjects": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/manageSubjects/assignSubjectsProps"
+              }
+            }
+          }
+        },
+        "assignedSubjects": {
+          "$ref": "#/components/schemas/manageSubjects/getCreateAssignedSubjects"
+        },
+        "editSubject": {
+          "type": "object",
+          "properties": {
+            "subjectId": {
+              "type": "integer",
+              "requried": false
+            },
+            "subjectName": {
+              "type": "string",
+              "required": false
+            },
+            "status": {
+              "type": "boolean",
+              "required": false
+            }
+          }
+        },
+        "updateSubjects": {
+          "type": "object",
+          "properties": {
+            "updateSubjects": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/manageSubjects/editSubject"
+              }
+            }
+          }
+        },
+        "subjects": {
+          "type": "object",
+          "properties": {
+            "subjectId": {
+              "type": "integer"
+            },
+            "subjectName": {
+              "type": "string"
+            },
+            "schoolId": {
+              "type": "integer"
+            },
+            "status": {
+              "type": "boolean"
+            },
+            "school": {
+              "type": "object",
+              "properties": {
+                "schoolName": {
+                  "type": "string"
+                },
+                "identity": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "getSubjects": {
+          "type": "object",
+          "properties": {
+            "data": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/manageSubjects/subjects"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "tokens": {
+    "x-access-token": {
+      "name": "x-access-token",
+      "description": "",
+      "in": "header",
+      "required": true,
+      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiQXJ1biIsImVtYWlsIjoibGF0aGEubW9oYW5AbWFpbGluYXRvciIsInVzZXJJZCI6MSwicm9sZUlkIjoxLCJzY2hvb2xJZCI6MSwiaWF0IjoxNjMxOTY4NzQ5LCJleHAiOjE2MzE5Njg4Njl9.Z5x7fx2AOybTrBGd89zmhlTnM3IvrmXlPwqkH_KOMDE"
+    },
+    "refreshToken": {
+      "name": "refreshtoken",
+      "description": "",
+      "in": "header",
+      "required": true,
+      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiQXJ1biIsImVtYWlsIjoibGF0aGEubW9oYW5AbWFpbGluYXRvciIsInVzZXJJZCI6MSwicm9sZUlkIjoxLCJzY2hvb2xJZCI6MSwiaWF0IjoxNjMxOTY4NzQ5fQ.mOAY_pqn6ugWi-q-MWUtQjTckIu56gJJfAFKmPjSKHE"
+    }
+  },
+  "paths": {
+    "/api/users/login": {
+      "post": {
+        "tags": ["userLogin"],
+        "summary": "Login into the system",
+        "description": "Login into the system",
+        "operationId": "userLogin",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "loginId",
+            "description": "enter email and password to login",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/userLogin"
+            }
+          }
+        ],
+        "responses": {
+          "403": {
+            "description": "Invalid credentials"
+          },
+          "200": {
+            "description": "Login Success"
+          }
+        }
+      }
+    },
+    "/api/installation": {
+      "post": {
+        "tags": ["SchoolOnboard"],
+        "summary": "Onboard a new school",
+        "description": "Create a new school under the application",
+        "operationId": "newSchoolInstallation",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "InstallationBody",
+            "description": "Enter the new school details",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/schoolOnboarding"
+            }
+          }
+        ],
+        "responses": {
+          "403": {
+            "description": "Invalid credentials"
+          },
+          "200": {
+            "description": "Login Success"
+          }
+        }
+      }
+    },
+    "/api/classes/create": {
+      "post": {
+        "tags": ["Manage Classes"],
+        "summary": "Create classes",
+        "description": "Create a new class under a school, school info will be taken from the backend",
+        "operationId": "newClassCreation",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "$ref": "#/tokens/x-access-token"
+          },
+          {
+            "$ref": "#/tokens/refreshToken"
+          },
+          {
+            "name": "className",
+            "description": "Enter the new class name",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/getAClass"
+            }
+          }
+        ],
+        "responses": {
+          "403": {
+            "description": "Invalid credentials"
+          },
+          "200": {
+            "description": "Login Success"
+          }
+        }
+      }
+    },
+    "/api/classes/update/{classId}": {
+      "patch": {
+        "tags": ["Manage Classes"],
+        "summary": "Update a class",
+        "description": "Update a class",
+        "operationId": "editAClass",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "$ref": "#/tokens/x-access-token"
+          },
+          {
+            "$ref": "#/tokens/refreshToken"
+          },
+          {
+            "name": "classBody",
+            "description": "",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/editAClass"
+            }
+          },
+          {
+            "name": "classId",
+            "in": "path",
+            "required": "true",
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "403": {
+            "description": "UnAuthorized user"
+          },
+          "200": {
+            "description": "Class updated successfully",
+            "content": "application/json",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/respObj"
+                },
+                {
+                  "$ref": "#/components/schemas/listOfClasses"
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "/api/classes/{offset}/{limit}": {
+      "get": {
+        "tags": ["Manage Classes"],
+        "summary": "List of classes",
+        "description": "Show list of classes",
+        "operationId": "ListOfClasses",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "$ref": "#/tokens/x-access-token"
+          },
+          {
+            "$ref": "#/tokens/refreshToken"
+          },
+          {
+            "name": "offset",
+            "in": "path",
+            "required": false,
+            "default": 0,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "limit",
+            "in": "path",
+            "required": false,
+            "default": 10,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "403": {
+            "description": "UnAuthorized user"
+          },
+          "200": {
+            "description": "Class updated successfully",
+            "content": "application/json",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/respObj"
+                },
+                {
+                  "$ref": "#/components/schemas/listOfClassesWithOutSchool"
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "/api/sections/": {
+      "get": {
+        "tags": ["Manage Sections"],
+        "summary": "List of sections",
+        "description": "Show list of sections of a defailtClass in a school",
+        "operationId": "ListOfSections",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "$ref": "#/tokens/x-access-token"
+          },
+          {
+            "$ref": "#/tokens/refreshToken"
+          }
+        ],
+        "responses": {
+          "403": {
+            "description": "UnAuthorized user"
+          },
+          "200": {
+            "description": "Listed sections successfully",
+            "content": "application/json",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/respObj"
+                },
+                {
+                  "$ref": "#/components/schemas/manageSections/getAllSectionsOfAClass"
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "/api/sections/byClass/{classId}": {
+      "get": {
+        "tags": ["Manage Sections"],
+        "summary": "List of sections",
+        "description": "Show list of sections",
+        "operationId": "ListOfSectionsOfAClass",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "$ref": "#/tokens/x-access-token"
+          },
+          {
+            "$ref": "#/tokens/refreshToken"
+          },
+          {
+            "name": "classId",
+            "in": "path",
+            "required": "true",
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "403": {
+            "description": "UnAuthorized user"
+          },
+          "200": {
+            "description": "Listed sections successfully",
+            "content": "application/json",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/respObj"
+                },
+                {
+                  "$ref": "#/components/schemas/manageSections/getAllSectionsOfAClass"
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "/api/sections/create": {
+      "post": {
+        "tags": ["Manage Sections"],
+        "summary": "Create section/s",
+        "description": "Create a new section/s under a class",
+        "operationId": "createSection",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "$ref": "#/tokens/x-access-token"
+          },
+          {
+            "$ref": "#/tokens/refreshToken"
+          },
+          {
+            "name": "SectionBody",
+            "description": "Section requrest body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/manageSections/createSections"
+            }
+          }
+        ],
+        "responses": {
+          "403": {
+            "description": "UnAuthorized user"
+          },
+          "200": {
+            "description": "Listed sections successfully",
+            "content": "application/json",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/respObj"
+                },
+                {
+                  "$ref": "#/components/schemas/manageSections/getAllSectionsOfAClass"
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "/api/sections/update": {
+      "patch": {
+        "tags": ["Manage Sections"],
+        "summary": "Edit section/s",
+        "description": "Edit  section/s under a class",
+        "operationId": "updateSection",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "$ref": "#/tokens/x-access-token"
+          },
+          {
+            "$ref": "#/tokens/refreshToken"
+          },
+          {
+            "name": "SectionBody",
+            "description": "Section requrest body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/manageSections/editSections"
+            }
+          }
+        ],
+        "responses": {
+          "403": {
+            "description": "UnAuthorized user"
+          },
+          "200": {
+            "description": "Listed sections successfully",
+            "content": "application/json",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/respObj"
+                },
+                {
+                  "$ref": "#/components/schemas/manageSections/getAllSectionsOfAClass"
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "/api/students/": {
+      "get": {
+        "tags": ["Manage Students"],
+        "summary": "List of students of a class",
+        "description": "Show list of students of a class",
+        "operationId": "studentsOfAClass",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "$ref": "#/tokens/x-access-token"
+          },
+          {
+            "$ref": "#/tokens/refreshToken"
+          },
+          {
+            "name": "classId",
+            "in": "query",
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "403": {
+            "description": "UnAuthorized user"
+          },
+          "200": {
+            "description": "Students of a class has been listed successfully",
+            "content": "application/json",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/respObj"
+                },
+                {
+                  "$ref": "#/components/schemas/manageStudents/getStudentsOfClass"
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "/api/students/create": {
+      "post": {
+        "tags": ["Manage Students"],
+        "summary": "Add students",
+        "description": "Add new students to a class",
+        "operationId": "createStudents",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "$ref": "#/tokens/x-access-token"
+          },
+          {
+            "$ref": "#/tokens/refreshToken"
+          },
+          {
+            "name": "RequestBodyy",
+            "description": "Create students request body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/manageStudents/createAStudents"
+            }
+          }
+        ],
+        "responses": {
+          "403": {
+            "description": "UnAuthorized user"
+          },
+          "200": {
+            "description": "New students has been created successfully",
+            "content": "application/json",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/respObj"
+                },
+                {
+                  "$ref": "#/components/schemas/manageStudents/getStudentsOfClass"
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "/api/students/update": {
+      "patch": {
+        "tags": ["Manage Students"],
+        "summary": "Update students",
+        "description": "Update students to a class",
+        "operationId": "updateStudents",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "$ref": "#/tokens/x-access-token"
+          },
+          {
+            "$ref": "#/tokens/refreshToken"
+          },
+          {
+            "name": "RequestBodyy",
+            "description": "Create students request body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/manageStudents/UpdateStudents"
+            }
+          }
+        ],
+        "responses": {
+          "403": {
+            "description": "UnAuthorized user"
+          },
+          "200": {
+            "description": "Students has been updated successfully",
+            "content": "application/json",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/respObj"
+                },
+                {
+                  "$ref": "#/components/schemas/manageStudents/getStudentsOfClass"
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "/api/subjects/createAssign": {
+      "post": {
+        "tags": ["Manage Subjects"],
+        "summary": "Create subject/s ",
+        "description": "Create subjects and if needed assign it to the classes or to a classs",
+        "operationId": "createAssignSubjects",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "$ref": "#/tokens/x-access-token"
+          },
+          {
+            "$ref": "#/tokens/refreshToken"
+          },
+          {
+            "name": "createAssignSubjectsBody",
+            "description": "createAssignSubjects request body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/manageSubjects/createAssign"
+            }
+          }
+        ],
+        "responses": {
+          "403": {
+            "description": "UnAuthorized user"
+          },
+          "200": {
+            "description": "Successfully created and assigned subjects",
+            "content": "application/json",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/respObj"
+                },
+                {
+                  "$ref": "#/components/schemas/manageSubjects/getCreateAssignedSubjects"
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "/api/subjects/assign": {
+      "post": {
+        "tags": ["Manage Subjects"],
+        "summary": "Assign subject/s ",
+        "description": "Assign subjects",
+        "operationId": "assignSubjects",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "$ref": "#/tokens/x-access-token"
+          },
+          {
+            "$ref": "#/tokens/refreshToken"
+          },
+          {
+            "name": "assignSubjectsBody",
+            "description": "assignSubjects request body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/manageSubjects/assignSubjects"
+            }
+          }
+        ],
+        "responses": {
+          "403": {
+            "description": "UnAuthorized user"
+          },
+          "200": {
+            "description": "Successfully created and assigned subjects",
+            "content": "application/json",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/respObj"
+                },
+                {
+                  "$ref": "#/components/schemas/manageSubjects/assignedSubjects"
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "/api/subjects/update": {
+      "patch": {
+        "tags": ["Manage Subjects"],
+        "summary": "Edit subject/s ",
+        "description": "Edit subjects",
+        "operationId": "updateSubjects",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "$ref": "#/tokens/x-access-token"
+          },
+          {
+            "$ref": "#/tokens/refreshToken"
+          },
+          {
+            "name": "Edit Subjects Body",
+            "description": "Edit Subjects request body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/manageSubjects/updateSubjects"
+            }
+          }
+        ],
+        "responses": {
+          "403": {
+            "description": "UnAuthorized user"
+          },
+          "200": {
+            "description": "Successfully created and assigned subjects",
+            "content": "application/json",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/respObj"
+                },
+                {
+                  "$ref": "#/components/schemas/manageSubjects/getSubjects"
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "/api/subjects/{subjectId}": {
+      "delete": {
+        "tags": ["Manage Subjects"],
+        "summary": "Delete subject ",
+        "description": "Delete subject",
+        "operationId": "deleteSubjects",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "$ref": "#/tokens/x-access-token"
+          },
+          {
+            "$ref": "#/tokens/refreshToken"
+          },
+          {
+            "name": "subjectId",
+            "description": "Give SubjectId to delete Subject",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "403": {
+            "description": "UnAuthorized user"
+          },
+          "200": {
+            "description": "Successfully deleted and unassugned the subject",
+            "content": "application/json",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/respObj"
+                },
+                {
+                  "$ref": "#/components/schemas/manageSubjects/getSubjects"
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "/api/assignedsubjects/unassign/{subjectId}/{classId}": {
+      "delete": {
+        "tags": ["Manage Subjects"],
+        "summary": "Unassign subject ",
+        "description": "Unassign subject",
+        "operationId": "unassignSubjects",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "$ref": "#/tokens/x-access-token"
+          },
+          {
+            "$ref": "#/tokens/refreshToken"
+          },
+          {
+            "name": "subjectId",
+            "description": "Give SubjectId to delete Subject",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "classId",
+            "description": "Enter class Id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "403": {
+            "description": "UnAuthorized user"
+          },
+          "200": {
+            "description": "Successfully Unassigned the subject",
+            "content": "application/json",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/respObj"
+                },
+                {
+                  "$ref": "#/components/schemas/manageSubjects/assignedSubjects"
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {},
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  }
+}
